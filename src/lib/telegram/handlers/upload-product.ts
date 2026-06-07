@@ -1,7 +1,6 @@
 import type { Context } from "telegraf";
 import { prisma } from "@/lib/prisma/client";
 import { uploadToCloudinary } from "@/lib/cloudinary/upload";
-import { generateDescription } from "@/lib/openai/generate-description";
 import { getSession, setState, clearState } from "@/lib/telegram/state";
 import slugify from "slugify";
 import { NL_CATEGORIES } from "@/types";
@@ -52,7 +51,13 @@ export async function handleUploadMessage(ctx: Context) {
   if (session.state === "upload:price_cost") {
     const cost = parseFloat(text.replace(/[^0-9.]/g, ""));
     if (isNaN(cost)) { await ctx.reply("Precio inválido. Solo números."); return; }
-    await setState(chatId, "upload:colors", { ...data, price_cost: cost, colors: [] });
+    await setState(chatId, "upload:description", { ...data, price_cost: cost });
+    await ctx.reply("📝 Escribí la descripción del producto:");
+    return;
+  }
+
+  if (session.state === "upload:description") {
+    await setState(chatId, "upload:colors", { ...data, description: text, colors: [] });
     await ctx.reply(
       "🎨 Ahora enviá los colores disponibles (uno por mensaje).\n" +
       "Cuando termines los colores escribí *listo*.",
@@ -141,15 +146,9 @@ async function createProduct(
   data: Record<string, unknown>,
   variantsRaw: object[]
 ) {
-  const name = data.name as string;
-  const category = data.category as string;
-
-  let description = "";
-  try {
-    description = await generateDescription(name, category);
-  } catch {
-    description = `${name} — ${category}`;
-  }
+  const name        = data.name as string;
+  const category    = data.category as string;
+  const description = (data.description as string | undefined) ?? "";
 
   const variants = variantsRaw as Array<{ name: string; images: string[]; stock: number }>;
 
