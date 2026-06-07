@@ -10,7 +10,10 @@ export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
   if (!body) return NextResponse.json({ error: "Invalid body" }, { status: 400 });
 
-  // Procesamiento async — respondemos 200 inmediatamente
-  processTelegramUpdate(body).catch(console.error);
+  try {
+    await processTelegramUpdate(body);
+  } catch (err) {
+    console.error("Telegram webhook error:", err);
+  }
   return NextResponse.json({ ok: true });
 }
