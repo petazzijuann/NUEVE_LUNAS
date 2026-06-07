@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
       images:         p.images,
       tags:           p.tags,
       price_sale:     Number(p.price_sale),
-      color_variants: p.color_variants as ColorVariant[],
+      color_variants: p.color_variants as unknown as ColorVariant[],
       is_published:   p.is_published,
       created_at:     p.created_at.toISOString(),
       updated_at:     p.updated_at.toISOString(),

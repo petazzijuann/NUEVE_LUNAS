@@ -234,7 +234,7 @@ export default function ProductsAdminClient({ products: initial }: { products: P
             </thead>
             <tbody>
               {products.map((p) => {
-                const totalStock = (p.color_variants as ColorVariant[]).reduce((s, v) => s + v.stock, 0);
+                const totalStock = (p.color_variants as unknown as ColorVariant[]).reduce((s, v) => s + v.stock, 0);
                 return (
                   <tr key={p.id} className="border-b border-border hover:bg-nl-gray/40 transition-colors">
                     <td className="px-4 py-3">
@@ -262,7 +262,7 @@ export default function ProductsAdminClient({ products: initial }: { products: P
                       <p className="text-xs text-nl-gray-dark">costo: {formatARS(p.price_cost)}</p>
                     </td>
                     <td className="px-4 py-3">
-                      <p className="text-xs">{(p.color_variants as ColorVariant[]).length} colores</p>
+                      <p className="text-xs">{(p.color_variants as unknown as ColorVariant[]).length} colores</p>
                       <p className="text-xs text-nl-gray-dark">{totalStock} unidades</p>
                     </td>
                     <td className="px-4 py-3">
@@ -339,7 +339,7 @@ function EditProductModal({
     price_cost:  String(product.price_cost),
     category:    product.category,
   });
-  const [variants, setVariants] = useState<ColorVariant[]>(product.color_variants as ColorVariant[]);
+  const [variants, setVariants] = useState<ColorVariant[]>(product.color_variants as unknown as ColorVariant[]);
   const [loading,  setLoading]  = useState(false);
 
   async function handleSave() {
