@@ -17,7 +17,7 @@ export default async function PedidosAdminPage() {
     customer_name:       o.customer_name,
     customer_email:      o.customer_email,
     customer_phone:      o.customer_phone,
-    customer_address:    o.customer_address as CustomerAddress,
+    customer_address:    o.customer_address as unknown as CustomerAddress,
     items:               o.items as unknown as OrderItem[],
     total_amount:        Number(o.total_amount),
     status:              o.status as OrderPublic["status"],

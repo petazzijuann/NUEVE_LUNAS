@@ -28,7 +28,7 @@ export default async function PedidoPage({ params }: Props) {
     customer_name:       raw.customer_name,
     customer_email:      raw.customer_email,
     customer_phone:      raw.customer_phone,
-    customer_address:    raw.customer_address as CustomerAddress,
+    customer_address:    raw.customer_address as unknown as CustomerAddress,
     items:               raw.items as unknown as OrderItem[],
     total_amount:        Number(raw.total_amount),
     status:              raw.status as OrderPublic["status"],
