@@ -68,30 +68,38 @@ export default async function PedidoPage({ params }: Props) {
       {/* Datos de transferencia */}
       {isTransfer && (
         <div className="nl-card border-nl-pink/30 bg-nl-pink-light p-6 mb-6">
-          <h2 className="font-playfair text-xl font-semibold text-nl-pink mb-3">Datos para transferir</h2>
-          <div className="space-y-2 text-sm">
-            {cbu   && <p><strong>CBU:</strong> {cbu}</p>}
-            {alias && <p><strong>Alias:</strong> {alias}</p>}
-            {tit   && <p><strong>Titular:</strong> {tit}</p>}
-            <p className="font-bold text-nl-pink text-base mt-2">
-              Monto: {formatARS(order.total_amount)}
+          <h2 className="font-playfair text-xl font-semibold text-nl-pink mb-3">¡Pedido recibido!</h2>
+          <p className="text-sm text-nl-text mb-4">
+            Comunicate con nosotros para acordar el envío y el pago. Pasanos tu ID de pedido al escribirnos:
+          </p>
+          <div className="bg-white rounded-xl px-4 py-3 mb-5 text-center">
+            <p className="label-tag text-nl-gray-dark text-[10px] mb-1">TU ID DE PEDIDO</p>
+            <p className="font-mono font-bold text-nl-pink text-lg tracking-widest">
+              #{order.id.slice(0, 8).toUpperCase()}
             </p>
           </div>
-          <p className="text-xs text-nl-gray-dark mt-3">
-            Una vez que realices la transferencia, te confirmamos el pedido y coordinamos el envío.
-          </p>
-          {phone && (
-            <a href={`https://wa.me/${phone.replace(/[^0-9]/g, "")}`} target="_blank" rel="noopener noreferrer"
-               className="inline-block mt-3 text-sm text-nl-blue hover:underline">
-              Enviar comprobante por WhatsApp →
-            </a>
-          )}
-          {insta && (
-            <a href={`https://instagram.com/${insta}`} target="_blank" rel="noopener noreferrer"
-               className="block mt-1 text-sm text-nl-blue hover:underline">
-              @{insta}
-            </a>
-          )}
+          <div className="flex flex-col gap-3">
+            {phone && (
+              <a
+                href={`https://wa.me/${phone.replace(/[^0-9]/g, "")}?text=Hola!%20Quiero%20coordinar%20mi%20pedido%20%23${order.id.slice(0, 8).toUpperCase()}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 py-3 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600 transition-colors"
+              >
+                Escribinos por WhatsApp
+              </a>
+            )}
+            {insta && (
+              <a
+                href={`https://instagram.com/${insta}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 py-3 bg-nl-blue text-white rounded-xl font-semibold text-sm hover:bg-nl-blue-dark transition-colors"
+              >
+                Escribinos por Instagram · @{insta}
+              </a>
+            )}
+          </div>
         </div>
       )}
 
