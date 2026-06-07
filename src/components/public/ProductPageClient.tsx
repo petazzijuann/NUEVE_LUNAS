@@ -159,9 +159,20 @@ export default function ProductPageClient({ product }: { product: ProductPublic 
               >
                 −
               </button>
-              <span className="px-5 py-2.5 text-base border-x border-border font-semibold min-w-[3rem] text-center">
-                {quantity}
-              </span>
+              <input
+                type="number"
+                min={WHOLESALE_MIN_UNITS_PER_ITEM}
+                value={quantity}
+                onChange={(e) => {
+                  const val = parseInt(e.target.value.replace(/\D/g, "")) || WHOLESALE_MIN_UNITS_PER_ITEM;
+                  setQuantity(Math.max(WHOLESALE_MIN_UNITS_PER_ITEM, val));
+                }}
+                onBlur={(e) => {
+                  const val = parseInt(e.target.value) || WHOLESALE_MIN_UNITS_PER_ITEM;
+                  setQuantity(Math.max(WHOLESALE_MIN_UNITS_PER_ITEM, val));
+                }}
+                className="w-16 py-2.5 text-base border-x border-border font-semibold text-center focus:outline-none focus:bg-nl-pink-light [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+              />
               <button
                 onClick={() => setQuantity((q) => q + 1)}
                 className="px-4 py-2.5 text-base hover:bg-nl-gray transition-colors"
