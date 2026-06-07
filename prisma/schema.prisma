@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id             String   @id @default(uuid())
+  name           String
+  slug           String   @unique
+  description    String
+  category       String
+  images         String[]
+  tags           String[]
+  price_sale     Decimal  @db.Decimal(10, 2)
+  price_cost     Decimal  @db.Decimal(10, 2)
+  // color_variants: [{ name: string, images: string[], stock: number }]
+  color_variants Json     @default("[]")
+  weight_kg      Float?
+  is_published   Boolean  @default(false)
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
+
+  sales Sale[]
+
+  @@map("products")
+}
+
+model Sale {
+  id             String   @id @default(uuid())
+  product_id     String
+  product_name   String
+  color          String
+  quantity       Int
+  sale_price     Decimal  @db.Decimal(10, 2)
+  cost_price     Decimal  @db.Decimal(10, 2)
+  channel        String
+  payment_method String
+  order_id       String?
+  customer_note  String?
+  created_at     DateTime @default(now())
+
+  product Product @relation(fields: [product_id], references: [id])
+  order   Order?  @relation(fields: [order_id], references: [id])
+
+  @@map("sales")
+}
+
+model Order {
+  id                  String   @id @default(uuid())
+  customer_name       String
+  customer_email      String
+  customer_phone      String
+  customer_address    Json
+  items               Json
+  total_amount        Decimal  @db.Decimal(12, 2)
+  status              String   @default("pending_payment")
+  payment_method      String
+  payment_proof_url   String?
+  astropay_payment_id String?
+
+  coupon_code     String?
+  discount_amount Decimal?  @db.Decimal(12, 2)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  sales Sale[]
+
+  @@map("orders")
+}
+
+model Coupon {
+  id           String    @id @default(uuid())
+  code         String    @unique
+  type         String
+  value        Decimal?  @db.Decimal(10, 2)
+  stock        Int
+  used_count   Int       @default(0)
+  min_purchase Decimal?  @db.Decimal(12, 2)
+  is_active    Boolean   @default(true)
+  expires_at   DateTime?
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+
+  @@map("coupons")
+}
+
+model ContactMessage {
+  id         String   @id @default(cuid())
+  nombre     String
+  email      String
+  asunto     String?
+  mensaje    String
+  created_at DateTime @default(now())
+
+  @@map("contact_messages")
+}
+
+model Subscriber {
+  id         String   @id @default(cuid())
+  email      String   @unique
+  created_at DateTime @default(now())
+
+  @@map("subscribers")
+}
+
+model TelegramSession {
+  id         String   @id @default(uuid())
+  chat_id    String   @unique
+  state      String   @default("idle")
+  data       Json     @default("{}")
+  updated_at DateTime @updatedAt
+
+  @@map("telegram_sessions")
+}

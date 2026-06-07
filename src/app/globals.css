@@ -1,0 +1,208 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Nueve Lunas Design Tokens ─────────────────────────────── */
+:root {
+  --nl-pink:        #D70A7B;
+  --nl-blue:        #4E9CBE;
+  --nl-white:       #FFFFFF;
+  --nl-pink-light:  #fce4f3;
+  --nl-blue-light:  #e3f2f9;
+  --nl-pink-dark:   #a80860;
+  --nl-blue-dark:   #3a7d9e;
+  --nl-gray:        #f7f7f7;
+  --nl-gray-mid:    #e8e8e8;
+  --nl-gray-dark:   #888888;
+  --nl-text:        #1a1a2e;
+  --error:          #c0392b;
+  --success:        #27ae60;
+
+  /* shadcn semantic tokens */
+  --background:          #FFFFFF;
+  --foreground:          #1a1a2e;
+  --card:                #FFFFFF;
+  --card-foreground:     #1a1a2e;
+  --popover:             #FFFFFF;
+  --popover-foreground:  #1a1a2e;
+  --primary:             #D70A7B;
+  --primary-foreground:  #FFFFFF;
+  --secondary:           #4E9CBE;
+  --secondary-foreground:#FFFFFF;
+  --muted:               #f7f7f7;
+  --muted-foreground:    #888888;
+  --accent:              #fce4f3;
+  --accent-foreground:   #D70A7B;
+  --destructive:         #c0392b;
+  --border:              #e8e8e8;
+  --input:               #e8e8e8;
+  --ring:                #D70A7B;
+  --radius:              0.75rem;
+
+  /* charts */
+  --chart-1: #D70A7B;
+  --chart-2: #4E9CBE;
+  --chart-3: #fce4f3;
+  --chart-4: #e3f2f9;
+  --chart-5: #a80860;
+
+  /* sidebar admin */
+  --sidebar:                    #D70A7B;
+  --sidebar-foreground:         #FFFFFF;
+  --sidebar-primary:            #FFFFFF;
+  --sidebar-primary-foreground: #D70A7B;
+  --sidebar-accent:             #a80860;
+  --sidebar-accent-foreground:  #FFFFFF;
+  --sidebar-border:             #a80860;
+  --sidebar-ring:               #FFFFFF;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans:        var(--font-inter);
+  --font-heading:     var(--font-playfair);
+  --font-mono:        monospace;
+
+  /* brand colors como utilidades Tailwind */
+  --color-nl-pink:        var(--nl-pink);
+  --color-nl-blue:        var(--nl-blue);
+  --color-nl-white:       var(--nl-white);
+  --color-nl-pink-light:  var(--nl-pink-light);
+  --color-nl-blue-light:  var(--nl-blue-light);
+  --color-nl-pink-dark:   var(--nl-pink-dark);
+  --color-nl-blue-dark:   var(--nl-blue-dark);
+  --color-nl-gray:        var(--nl-gray);
+  --color-nl-gray-mid:    var(--nl-gray-mid);
+  --color-nl-gray-dark:   var(--nl-gray-dark);
+  --color-nl-text:        var(--nl-text);
+
+  /* shadcn tokens */
+  --color-card:                  var(--card);
+  --color-card-foreground:       var(--card-foreground);
+  --color-popover:               var(--popover);
+  --color-popover-foreground:    var(--popover-foreground);
+  --color-primary:               var(--primary);
+  --color-primary-foreground:    var(--primary-foreground);
+  --color-secondary:             var(--secondary);
+  --color-secondary-foreground:  var(--secondary-foreground);
+  --color-muted:                 var(--muted);
+  --color-muted-foreground:      var(--muted-foreground);
+  --color-accent:                var(--accent);
+  --color-accent-foreground:     var(--accent-foreground);
+  --color-destructive:           var(--destructive);
+  --color-border:                var(--border);
+  --color-input:                 var(--input);
+  --color-ring:                  var(--ring);
+  --color-chart-1:               var(--chart-1);
+  --color-chart-2:               var(--chart-2);
+  --color-chart-3:               var(--chart-3);
+  --color-chart-4:               var(--chart-4);
+  --color-chart-5:               var(--chart-5);
+  --color-sidebar:               var(--sidebar);
+  --color-sidebar-foreground:    var(--sidebar-foreground);
+  --color-sidebar-primary:       var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent:        var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border:        var(--sidebar-border);
+  --color-sidebar-ring:          var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), serif;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* ── Utilidades Nueve Lunas ────────────────────────────────── */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes marqueeScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition-duration: 0.01ms !important; }
+}
+
+@layer utilities {
+  .font-playfair {
+    font-family: var(--font-playfair), serif;
+  }
+  .font-inter {
+    font-family: var(--font-inter), sans-serif;
+  }
+  .label-tag {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .price-text {
+    font-family: var(--font-inter), sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--nl-pink);
+  }
+  .btn-primary {
+    background: var(--nl-pink);
+    color: #fff;
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--nl-pink-dark);
+  }
+  .btn-secondary {
+    background: var(--nl-blue);
+    color: #fff;
+    border-radius: var(--radius);
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover {
+    background: var(--nl-blue-dark);
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .animate-marquee {
+    animation: marqueeScroll 30s linear infinite;
+  }
+  .animate-fade-up {
+    animation: fadeSlideUp 0.6s ease-out both;
+  }
+  .nl-card {
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+  }
+}
