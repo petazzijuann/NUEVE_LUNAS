@@ -12,14 +12,7 @@ if (!token) throw new Error("TELEGRAM_BOT_TOKEN no definido");
 
 export const bot = new Telegraf(token);
 
-const ADMIN_CHAT_ID = process.env.TELEGRAM_ADMIN_CHAT_ID ?? "";
-
-function isAdmin(chatId: string | number) {
-  return String(chatId) === ADMIN_CHAT_ID;
-}
-
 bot.start(async (ctx) => {
-  if (!isAdmin(ctx.chat.id)) return;
   await ctx.reply(
     "👶 *Nueve Lunas Admin*\n\n" +
     "/nuevo — Cargar nuevo producto\n" +
@@ -30,7 +23,6 @@ bot.start(async (ctx) => {
 });
 
 bot.command("ayuda", async (ctx) => {
-  if (!isAdmin(ctx.chat.id)) return;
   await ctx.reply(
     "📋 *Comandos disponibles*\n\n" +
     "/nuevo — Cargar nuevo producto con fotos\n" +
@@ -41,18 +33,15 @@ bot.command("ayuda", async (ctx) => {
 });
 
 bot.command("nuevo", async (ctx) => {
-  if (!isAdmin(ctx.chat.id)) return;
   await handleUploadProduct(ctx);
 });
 
 bot.command("metricas", async (ctx) => {
-  if (!isAdmin(ctx.chat.id)) return;
   await handleMetrics(ctx);
 });
 
 // Manejar fotos en flujo de carga
 bot.on("photo", async (ctx) => {
-  if (!isAdmin(ctx.chat.id)) return;
   const session = await getSession(String(ctx.chat.id));
   if (session.state?.startsWith("upload:photos:")) {
     await handleUploadPhoto(ctx);
@@ -61,7 +50,6 @@ bot.on("photo", async (ctx) => {
 
 // Manejar texto en flujos activos
 bot.on("text", async (ctx) => {
-  if (!isAdmin(ctx.chat.id)) return;
   const session = await getSession(String(ctx.chat.id));
   if (session.state !== "idle") {
     await handleUploadMessage(ctx);
