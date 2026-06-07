@@ -7,8 +7,7 @@ import {
 import { handleMetrics } from "./handlers/metrics";
 import { getSession } from "./state";
 
-const token = process.env.TELEGRAM_BOT_TOKEN;
-if (!token) throw new Error("TELEGRAM_BOT_TOKEN no definido");
+const token = process.env.TELEGRAM_BOT_TOKEN ?? "placeholder";
 
 export const bot = new Telegraf(token);
 
