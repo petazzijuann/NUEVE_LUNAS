@@ -78,28 +78,16 @@ export default async function PedidoPage({ params }: Props) {
               #{order.id.slice(0, 8).toUpperCase()}
             </p>
           </div>
-          <div className="flex flex-col gap-3">
-            {phone && (
-              <a
-                href={`https://wa.me/${phone.replace(/[^0-9]/g, "")}?text=Hola!%20Quiero%20coordinar%20mi%20pedido%20%23${order.id.slice(0, 8).toUpperCase()}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-3 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600 transition-colors"
-              >
-                Escribinos por WhatsApp
-              </a>
-            )}
-            {insta && (
-              <a
-                href={`https://instagram.com/${insta}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-3 bg-nl-blue text-white rounded-xl font-semibold text-sm hover:bg-nl-blue-dark transition-colors"
-              >
-                Escribinos por Instagram · @{insta}
-              </a>
-            )}
-          </div>
+          {phone && (
+            <a
+              href={`https://wa.me/${phone.replace(/[^0-9]/g, "")}?text=Hola!%20Quiero%20coordinar%20mi%20pedido%20%23${order.id.slice(0, 8).toUpperCase()}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 py-3 bg-green-500 text-white rounded-xl font-semibold text-sm hover:bg-green-600 transition-colors"
+            >
+              Escribinos por WhatsApp
+            </a>
+          )}
         </div>
       )}
 
