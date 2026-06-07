@@ -6,7 +6,6 @@ import type { ProductPublic } from "@/types";
 export default function ProductCard({ product }: { product: ProductPublic }) {
   const img1 = product.images[0] ?? product.color_variants[0]?.images[0];
   const img2 = product.images[1] ?? product.color_variants[0]?.images[1];
-  const totalStock = product.color_variants.reduce((s, v) => s + v.stock, 0);
   const colorCount = product.color_variants.length;
 
   return (
@@ -47,14 +46,6 @@ export default function ProductCard({ product }: { product: ProductPublic }) {
           </span>
         </div>
 
-        {/* Sin stock */}
-        {totalStock === 0 && (
-          <div className="absolute inset-0 bg-white/60 flex items-center justify-center">
-            <span className="label-tag text-nl-gray-dark bg-white px-3 py-1 rounded-full border border-border">
-              SIN STOCK
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Info */}

@@ -156,7 +156,7 @@ export default function ProductsAdminClient({ products: initial }: { products: P
                   type="button"
                   onClick={() => {
                     if (!newColorName.trim()) return;
-                    setNewVariants((prev) => [...prev, { name: newColorName.trim(), images: [], stock: 0 }]);
+                    setNewVariants((prev) => [...prev, { name: newColorName.trim(), images: [], stock: 999 }]);
                     setNewColorName("");
                   }}
                   className="px-4 py-2 bg-nl-blue text-white rounded-xl text-sm font-semibold"
@@ -172,16 +172,6 @@ export default function ProductsAdminClient({ products: initial }: { products: P
                     <button onClick={() => setNewVariants((prev) => prev.filter((_, i) => i !== idx))}>
                       <X size={14} className="text-nl-gray-dark hover:text-red-500" />
                     </button>
-                  </div>
-                  {/* Stock */}
-                  <div className="flex items-center gap-2 mb-2">
-                    <label className="label-tag text-[10px] text-nl-gray-dark">STOCK:</label>
-                    <input
-                      type="number"
-                      className="border border-border rounded-lg px-2 py-1 text-xs w-16"
-                      value={v.stock}
-                      onChange={(e) => setNewVariants((prev) => prev.map((vv, i) => i === idx ? { ...vv, stock: parseInt(e.target.value) || 0 } : vv))}
-                    />
                   </div>
                   {/* Fotos */}
                   <div className="flex flex-wrap gap-2">
@@ -234,7 +224,6 @@ export default function ProductsAdminClient({ products: initial }: { products: P
             </thead>
             <tbody>
               {products.map((p) => {
-                const totalStock = (p.color_variants as unknown as ColorVariant[]).reduce((s, v) => s + v.stock, 0);
                 return (
                   <tr key={p.id} className="border-b border-border hover:bg-nl-gray/40 transition-colors">
                     <td className="px-4 py-3">
@@ -263,7 +252,6 @@ export default function ProductsAdminClient({ products: initial }: { products: P
                     </td>
                     <td className="px-4 py-3">
                       <p className="text-xs">{(p.color_variants as unknown as ColorVariant[]).length} colores</p>
-                      <p className="text-xs text-nl-gray-dark">{totalStock} unidades</p>
                     </td>
                     <td className="px-4 py-3">
                       <span className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-semibold ${
@@ -420,15 +408,6 @@ function EditProductModal({
           {variants.map((v, idx) => (
             <div key={idx} className="bg-nl-gray rounded-xl p-3 mb-2">
               <p className="font-semibold text-sm mb-2">{v.name}</p>
-              <div className="flex items-center gap-2 mb-2">
-                <label className="label-tag text-[10px] text-nl-gray-dark">STOCK:</label>
-                <input
-                  type="number"
-                  className="border border-border rounded-lg px-2 py-1 text-xs w-20"
-                  value={v.stock}
-                  onChange={(e) => setVariants((prev) => prev.map((vv, i) => i === idx ? { ...vv, stock: parseInt(e.target.value) || 0 } : vv))}
-                />
-              </div>
               <div className="flex flex-wrap gap-2">
                 {v.images.map((img, ii) => (
                   <div key={ii} className="relative w-14 h-14 rounded-lg overflow-hidden border border-border">

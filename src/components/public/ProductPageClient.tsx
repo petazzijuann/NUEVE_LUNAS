@@ -136,17 +136,13 @@ export default function ProductPageClient({ product }: { product: ProductPublic 
                   <button
                     key={v.name}
                     onClick={() => { setSelectedVariant(v); setImgIdx(0); }}
-                    disabled={v.stock === 0}
                     className={`px-4 py-2 rounded-full border-2 text-sm font-medium transition-all ${
                       selectedVariant?.name === v.name
                         ? "border-nl-pink text-nl-pink bg-nl-pink-light"
-                        : v.stock === 0
-                        ? "border-border text-nl-gray-dark bg-nl-gray cursor-not-allowed line-through"
                         : "border-border text-nl-text hover:border-nl-pink hover:text-nl-pink"
                     }`}
                   >
                     {v.name}
-                    {v.stock === 0 && <span className="ml-1 text-[10px]">(sin stock)</span>}
                   </button>
                 ))}
               </div>
@@ -183,7 +179,7 @@ export default function ProductPageClient({ product }: { product: ProductPublic 
           {/* Botón agregar */}
           <button
             onClick={handleAddToCart}
-            disabled={!selectedVariant || (selectedVariant?.stock ?? 0) === 0}
+            disabled={!selectedVariant}
             className="w-full flex items-center justify-center gap-2 py-4 bg-nl-pink text-white rounded-2xl font-semibold text-base hover:bg-nl-pink-dark transition-colors disabled:bg-nl-gray disabled:text-nl-gray-dark disabled:cursor-not-allowed shadow-md"
           >
             <ShoppingBag size={18} />

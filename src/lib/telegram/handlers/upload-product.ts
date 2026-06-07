@@ -134,7 +134,7 @@ export async function handleUploadPhoto(ctx: Context) {
   if (existingVariant) {
     existingVariant.images.push(cloudUrl);
   } else {
-    variants.push({ name: colors[idx], images: [cloudUrl], stock: 0 });
+    variants.push({ name: colors[idx], images: [cloudUrl], stock: 999 });
   }
 
   await setState(chatId, session.state, { ...data, color_variants: variants });
@@ -175,7 +175,7 @@ async function createProduct(
     `*${name}*\nSlug: \`${product.slug}\`\n` +
     `Precio: $${data.price_sale}\n` +
     `Colores: ${variants.map((v) => v.name).join(", ")}\n\n` +
-    `Ingresá al admin para publicarlo y actualizar el stock.`,
+    `Ingresá al admin para publicarlo.`,
     { parse_mode: "Markdown" }
   );
 }
