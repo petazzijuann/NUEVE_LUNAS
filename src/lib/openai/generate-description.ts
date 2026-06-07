@@ -1,7 +1,7 @@
-import { openai } from "./client";
+import { getOpenAI } from "./client";
 
 export async function generateDescription(productName: string, category: string): Promise<string> {
-  const res = await openai.chat.completions.create({
+  const res = await getOpenAI().chat.completions.create({
     model: "gpt-4o-mini",
     messages: [
       {
